@@ -24,12 +24,10 @@ async def channels(query):
         
     return channels_list
 
-'''
-4test
+''' test '''
 async def main():
     query = "gaza"  
     await channels(query)
 
 if __name__ == "__main__":
     client.loop.run_until_complete(main())
-'''
