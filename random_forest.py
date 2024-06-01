@@ -1,17 +1,30 @@
+from pymongo import MongoClient
 import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, classification_report
 
-# Step 1: Load the data
-train_data = pd.read_csv('train_data.csv')
-test_data = pd.read_csv('test_data.csv')
+# Step 1: Connect to MongoDB and load the data
+client = MongoClient('mongodb://localhost:27017/')
+db = client.telegram_messages
+
+# Load training data
+train_data_cursor = db.train_data_radical.find()
+train_data = pd.DataFrame(list(train_data_cursor))
+#check
+print("Train Data Columns:", train_data.columns)
+
+# Load test data
+test_data_cursor = db.test_data.find()
+test_data = pd.DataFrame(list(test_data_cursor))
+#check
+print("Test Data Columns:", test_data.columns)
 
 # Step 2: Preprocess the text
 vectorizer = TfidfVectorizer(max_features=1000, stop_words='english')
-X_train = vectorizer.fit_transform(train_data['message'])
+X_train = vectorizer.fit_transform(train_data['message_text'])
 y_train = train_data['label']
-X_test = vectorizer.transform(test_data['message'])
+X_test = vectorizer.transform(test_data['message_text'])
 y_test = test_data['label']
 
 # Step 3: Build and train the random forest model
