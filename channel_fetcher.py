@@ -1,17 +1,13 @@
 from telethon import TelegramClient, functions
 import configparser
 
-# Load the configuration
 config = configparser.ConfigParser()
 config.read('config.ini')
 
 api_id = config['telegram']['api_id']
 api_hash = config['telegram']['api_hash']
-print(f"API ID: {api_id}")
-print(f"API ID: {api_hash}")
 
-# Create the client and connect
-client = TelegramClient('tele1', int(api_id), api_hash)
+client = TelegramClient('session_name', api_id, api_hash)
 
 async def fetch_channels_with_query(query):
     """ Fetch channels that match the query."""
