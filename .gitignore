@@ -2,3 +2,4 @@
 config.ini
 /shelf/
 /workspace.xml
+*.session
