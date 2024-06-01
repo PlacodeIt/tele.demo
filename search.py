@@ -1,7 +1,6 @@
 from channel_fetcher import client, fetch_channels_with_query
 import asyncio
 
-
 async def search_for_word_in_query(word, query):
     """
     Search for a word in a query in all channels that match the query and
