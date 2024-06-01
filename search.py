@@ -1,6 +1,6 @@
 from channel_fetcher import client, fetch_channels_with_query
 import asyncio
-
+from db import add_message
 
 async def search_for_word_in_query(word, query):
     """
@@ -25,15 +25,8 @@ async def search_for_word_in_query(word, query):
                 "chat_username": message.sender.username,
                 "message_link": f"https://t.me/{channel_title}/{message.id}"
             })
-
-            # TODO Check if message is in english
-            # check if message is in english
-            # if message.lang_code == "en":
-            #     print("Message is in English")
-            # else:
-            #     print("Message is not in English")
-
-    return channels_list, messages_list
+            add_message(message.text, message.id, channel_title, channel_id, message.sender.username if message.sender else None)
+            return channels_list, messages_list
 
 
 async def main():
