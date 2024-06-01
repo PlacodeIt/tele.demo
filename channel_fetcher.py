@@ -16,7 +16,7 @@ async def fetch_channels_with_query(query):
     await client.start()
     result = await client(functions.contacts.SearchRequest(
         q=query,
-        limit=15
+        limit=50
     ))
 
     channels_list = []
