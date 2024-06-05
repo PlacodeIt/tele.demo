@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import AnalysisService from '../../services/AnalysisService';
+import AnalysisService from '.././services/AnalysisService';
 
 const TextAnalysis = () => {
   const [text, setText] = useState('');

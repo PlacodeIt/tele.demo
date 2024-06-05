@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import AnalysisService from '../../services/AnalysisService';
+import AnalysisService from '.././services/AnalysisService';
 
 const RadicalUsers = () => {
   const [users, setUsers] = useState([]);
