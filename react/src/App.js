@@ -1,25 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import SignIn from './components/auth/signin';
+import LogIn from './components/auth/login';
+import TextAnalysis from './components/analysis/textanalysis';
+import RadicalMessages from './components/analysis/radicalmessages';
+import RadicalUsers from './components/analysis/radicalusers';
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Switch>
+        <Route path="/signin" component={SignIn} />
+        <Route path="/login" component={LogIn} />
+        <Route path="/analyze" component={TextAnalysis} />
+        <Route path="/radical-messages" component={RadicalMessages} />
+        <Route path="/radical-users" component={RadicalUsers} />
+      </Switch>
+    </Router>
   );
-}
+};
 
 export default App;
