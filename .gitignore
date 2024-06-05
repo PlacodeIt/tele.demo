@@ -1,6 +1,5 @@
 [telegram]
-config.ini
-/shelf/
-/workspace.xml
+.config.ini
 tele1.session
-
+/.idea
+/__pycache__
