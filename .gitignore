@@ -1,5 +1,4 @@
-[telegram]
-.config.ini
+config.ini
 tele1.session
-/.idea
-/__pycache__
+.idea/
+__pycache__/
