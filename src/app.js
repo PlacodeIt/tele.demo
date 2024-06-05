@@ -4,7 +4,7 @@ import SignIn from './components/auth/signin';
 import LogIn from './components/auth/login';
 import TextAnalysis from './components/analysis/textanalysis';
 import RadicalMessages from './components/analysis/radicalmessages';
-import RadicalUsers from './components/analysis/RadicalUsers';
+import RadicalUsers from './components/analysis/radicalusers';
 
 const App = () => {
   return (

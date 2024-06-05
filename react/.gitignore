@@ -1,5 +1,14 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
+.package-lock.json
+.package.json
+.README.md
+.favicon.ico
+.logo192.png
+.logo512.png
+.manifest.json
+.robots.txt
+.logo.svg
 # dependencies
 /node_modules
 /.pnp
