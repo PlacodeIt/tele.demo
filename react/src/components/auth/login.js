@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import AuthService from '../../services/authservice';
+import AuthService from '../../services/AuthService';
 
 const LogIn = () => {
   const [username, setUsername] = useState('');
@@ -17,8 +17,18 @@ const LogIn = () => {
   return (
     <div>
       <h2>Log In</h2>
-      <input type="text" placeholder="Username" onChange={(e) => setUsername(e.target.value)} />
-      <input type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
+      <input
+        type="text"
+        placeholder="Username"
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
+      />
+      <input
+        type="password"
+        placeholder="Password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+      />
       <button onClick={handleLogIn}>Log In</button>
     </div>
   );

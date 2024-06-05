@@ -1,21 +1,21 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import SignIn from './components/auth/signin';
-import LogIn from './components/auth/login';
-import TextAnalysis from './components/analysis/textanalysis';
-import RadicalMessages from './components/analysis/radicalmessages';
-import RadicalUsers from './components/analysis/radicalusers';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import LogIn from './components/auth/LogIn';
+import SignIn from './components/auth/SignIn';
+import TextAnalysis from './components/analysis/TextAnalysis';
+import RadicalMessages from './components/analysis/RadicalMessages';
+import RadicalUsers from './components/analysis/RadicalUsers';
 
 const App = () => {
   return (
     <Router>
-      <Switch>
-        <Route path="/signin" component={SignIn} />
-        <Route path="/login" component={LogIn} />
-        <Route path="/analyze" component={TextAnalysis} />
-        <Route path="/radical-messages" component={RadicalMessages} />
-        <Route path="/radical-users" component={RadicalUsers} />
-      </Switch>
+      <Routes>
+        <Route path="/login" element={<LogIn />} />
+        <Route path="/signin" element={<SignIn />} />
+        <Route path="/analyze" element={<TextAnalysis />} />
+        <Route path="/radical-messages" element={<RadicalMessages />} />
+        <Route path="/radical-users" element={<RadicalUsers />} />
+      </Routes>
     </Router>
   );
 };

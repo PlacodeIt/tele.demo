@@ -1,4 +1,11 @@
+# Ignore configuration file
 config.ini
+
+# Ignore session files
 tele1.session
+
+# Ignore IDE configuration directory
 .idea/
+
+# Ignore Python cache directories
 __pycache__/
