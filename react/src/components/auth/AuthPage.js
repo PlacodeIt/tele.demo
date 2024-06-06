@@ -1,35 +1,42 @@
 import React, { useState } from 'react';
-import AuthService from '.././services/AuthService';
+import axios from 'axios';
 
 const AuthPage = () => {
   const [isSignUp, setIsSignUp] = useState(false);
+  const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
 
-  const handleLogin = async () => {
+  const handleSignUp = async () => {
     try {
-      await AuthService.login(username, password);
-      alert('Login successful');
-      // Redirect to another page or handle successful login
+      await axios.post('http://localhost:3001/register', { email, username, password });
+      alert('Sign up successful');
     } catch (error) {
-      alert('Login failed');
+      alert('Sign up failed');
     }
   };
 
-  const handleSignUp = async () => {
+  const handleLogIn = async () => {
     try {
-      await AuthService.register(username, password);
-      alert('Sign up successful');
-      // Redirect to another page or handle successful sign up
+      await axios.post('http://localhost:3001/login', { username, password });
+      alert('Login successful');
     } catch (error) {
-      alert('Sign up failed');
+      alert('Login failed');
     }
   };
 
   return (
     <div>
       <h2>{isSignUp ? 'Sign Up' : 'Log In'}</h2>
+      {isSignUp && (
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+      )}
       <input
         type="text"
         placeholder="Username"
@@ -52,7 +59,7 @@ const AuthPage = () => {
             />
             Remember me
           </label>
-          <button onClick={handleLogin}>Log In</button>
+          <button onClick={handleLogIn}>Log In</button>
           <p>
             Forgot my password | <span onClick={() => setIsSignUp(true)} style={{ cursor: 'pointer', color: 'blue' }}>Sign Up</span>
           </p>
