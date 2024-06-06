@@ -9,3 +9,6 @@ tele1.session
 
 # Ignore Python cache directories
 __pycache__/
+
+# Ignore backend node_modules
+react/backend/node_modules/
