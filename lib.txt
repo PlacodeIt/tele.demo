@@ -1,0 +1,11 @@
+#pip install 
+nltk
+textblob
+scikit-learn
+pymongo
+telethon
+pandas
+openpyxl
+cryptg
+cryptography
+pyopenssl

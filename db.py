@@ -1,52 +1,73 @@
 import pymongo
+import logging
+
+# Setup logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
 
 # Connect to MongoDB
 client = pymongo.MongoClient("mongodb://localhost:27017/")
 db = client["telegram_messages"]
-collection = db["messages"]
+
+# Add a chat to the database
+def add_chat(chat_info, collection_name):
+    collection = db[collection_name]
+    result = collection.update_one(
+        {"chat_id": chat_info["chat_id"]},
+        {"$set": chat_info},
+        upsert=True
+    )
+    if result.upserted_id:
+        logger.info(f"Chat {chat_info['chat_id']} ({chat_info['type']}) added successfully in collection '{collection_name}'.")
+    else:
+        logger.info(f"Chat {chat_info['chat_id']} ({chat_info['type']}) updated successfully in collection '{collection_name}'.")
 
 # Add a message to the database
-def add_message(message_text, message_id, chat_title, chat_id, chat_username):
+def add_message(message_text, message_id, chat_title, chat_id, chat_username, media_type):
     message = {
         "message_text": message_text,
         "message_id": message_id,
         "chat_title": chat_title,
         "chat_id": chat_id,
-        "chat_username": chat_username
+        "chat_username": chat_username,
+        "media_type": media_type
     }
-    collection.insert_one(message)
-    print("Message added successfully.")
+    collection = db["messages"]
+    result = collection.update_one(
+        {"message_id": message_id},
+        {"$set": message},
+        upsert=True
+    )
+    if result.upserted_id:
+        logger.info(f"Message {message_id} added successfully.")
+    else:
+        logger.info(f"Message {message_id} updated successfully.")
 
-# View messages in the database
+# View all chats in a specific collection in the database
+def view_chats(collection_name):
+    collection = db[collection_name]
+    chats = collection.find()
+    for chat in chats:
+        print(chat)
+
+# View all messages in the messages collection
 def view_messages():
+    collection = db["messages"]
     messages = collection.find()
     for message in messages:
         print(message)
 
-# Edit a message in the database
-def edit_message(message_id, new_message_text):
-    collection.update_one({"message_id": message_id}, {"$set": {"message_text": new_message_text}})
-    print("Message updated successfully.")
-
-# Delete a message from the database
-def delete_message(message_id):
-    collection.delete_one({"message_id": message_id})
-    print("Message deleted successfully.")
-
 if __name__ == '__main__':
-    # Message for testing
-    fake_message = {
-        "message_text": "This is a fake message.",
-        "message_id": 123456789,
+    # Example message for testing
+    example_message = {
+        "message_text": "This is a test message.",
+        "message_id": 1,
         "chat_title": "Test Chat",
-        "chat_id": 987654321,
-        "chat_username": "test_user"
+        "chat_id": 123456789,
+        "chat_username": "test_user",
+        "media_type": "text"
     }
 
-    # Tests
-    add_message(**fake_message)
-    view_messages()
-    edit_message(fake_message["message_id"], "This is an edited message.")
-    view_messages()
-    delete_message(fake_message["message_id"])
+    # Test functions
+    add_message(**example_message)
     view_messages()

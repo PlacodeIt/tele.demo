@@ -17,16 +17,27 @@ async def search_for_word_in_query(word, query):
         print(f"@@@@ Searching in {channel_title}...")
         async for message in client.iter_messages(channel_id, search=word, limit=15):
             print(f"Found '{word}' in message {message.id} in {channel_title}")  # : {message.text}")
+            
+            # Determine the media type
+            if message.photo:
+                media_type = "photo"
+            elif message.video:
+                media_type = "video"
+            else:
+                media_type = "text"
+            
             messages_list.append({
                 "message_text": message.text,
                 "message_id": message.id,
                 "chat_title": channel_title,
                 "chat_id": channel_id,
                 "chat_username": message.sender.username if message.sender else None,
-                "message_link": f"https://t.me/{channel_title}/{message.id}"
+                "message_link": f"https://t.me/{channel_title}/{message.id}",
+                "media_type": media_type
             })
+            
             # Add message to the database
-            add_message(message.text, message.id, channel_title, channel_id, message.sender.username if message.sender else None)
+            add_message(message.text, message.id, channel_title, channel_id, message.sender.username if message.sender else None, media_type)
 
     return channels_list, messages_list
 
