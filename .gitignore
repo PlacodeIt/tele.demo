@@ -1,17 +1,22 @@
-
+# Python bytecode
 __pycache__/
-venv/
-react/
+*.pyc
 
+# Virtual environment
+venv/
+
+# IDE settings
 .idea/
 
+# Environment variables file
 config.ini
 
-
+# Downloads directory
 downloads/
 
+# Ignore any other log or temporary files
 *.log
 *.tmp
-/__pycache__
-__pycache__/channel_fetcher.cpython-310.pyc
-__pycache__/db.cpython-310.pyc
+
+# Node.js modules
+react/backend/node_modules/

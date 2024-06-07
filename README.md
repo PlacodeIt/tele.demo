@@ -55,25 +55,29 @@ Here is an example of what your .gitignore file might look like:
 bash
 Copy code
 
+# Python bytecode
 __pycache__/
-venv/
-react/
+*.pyc
 
+# Virtual environment
+venv/
+
+# IDE settings
 .idea/
 
+# Environment variables file
 config.ini
 
-
+# Downloads directory
 downloads/
-
-*.log
-*.tmp
-/__pycache__
-
 
 # Ignore any other log or temporary files
 *.log
 *.tmp
+
+# Node.js modules
+react/backend/node_modules/
+
 Steps to Create and Share Your Project on GitHub
 Initialize Git Repository:
 
