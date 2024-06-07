@@ -13,3 +13,5 @@ downloads/
 *.log
 *.tmp
 /__pycache__
+__pycache__/channel_fetcher.cpython-310.pyc
+__pycache__/db.cpython-310.pyc

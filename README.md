@@ -54,20 +54,22 @@ Here is an example of what your .gitignore file might look like:
 
 bash
 Copy code
-# Python bytecode
+
 __pycache__/
-
-# Virtual environment
 venv/
+react/
 
-# IDE settings
 .idea/
 
-# Environment variables file
 config.ini
 
-# Downloads directory
+
 downloads/
+
+*.log
+*.tmp
+/__pycache__
+
 
 # Ignore any other log or temporary files
 *.log
