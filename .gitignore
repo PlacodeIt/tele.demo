@@ -20,3 +20,6 @@ downloads/
 
 # Node.js modules
 react/backend/node_modules/
+/node_modules
+react/package-lock.json
+react/package.json
