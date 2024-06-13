@@ -1,6 +1,27 @@
-# Default ignored files
-config.ini
-/shelf/
-/workspace.xml
-tele1.session
+# Python bytecode
+__pycache__/
+*.pyc
 
+# Virtual environment
+venv/
+
+# IDE settings
+.idea/
+
+# Environment variables file
+config.ini
+
+# Downloads directory
+downloads/
+
+# Ignore any other log or temporary files
+*.log
+*.tmp
+
+# Node.js modules
+react/backend/node_modules/
+/node_modules
+react/package-lock.json
+react/package.json
+react/package-lock.json
+react/package.json
