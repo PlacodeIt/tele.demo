@@ -1,0 +1,26 @@
+body {
+    font-family: 'Arial', system-ui;
+    background-color: #0088cc; /* Telegram primary color */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+.container {
+    width: 50%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 0 20px;
+}

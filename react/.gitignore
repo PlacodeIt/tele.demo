@@ -1,14 +1,3 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
-.package-lock.json
-.package.json
-.README.md
-.favicon.ico
-.logo192.png
-.logo512.png
-.manifest.json
-.robots.txt
-.logo.svg
 # dependencies
 /node_modules
 /.pnp
@@ -27,10 +16,17 @@
 .env.test.local
 .env.production.local
 
+# Log files
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
 # Ignore backend package files
-/backend/package-lock.json
 /backend/package.json
+/backend/package-lock.json
+
+# Ignore root package files (if any)
+/package.json
+/package-lock.json
+
+./backend/.env

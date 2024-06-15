@@ -1,25 +1,29 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import AuthService from '../services/AuthService';
 import { useNavigate } from 'react-router-dom';
 import './AuthPage.css';
-import { TextField, Checkbox, FormControlLabel, Typography, Container, CssBaseline, Link, Grid } from '@mui/material';
+import { Container, CssBaseline, Typography, TextField, Grid, Link } from '@mui/material';
 import { TDButton } from '../design/TDButton.tsx';
 
-const AuthPage = () => {
+const SignUpPage = () => {
   const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [rememberMe, setRememberMe] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleLogIn = async () => {
+  const handleSignUp = async () => {
+    setIsLoading(true);
     try {
-      setIsLoading(true);
-      await axios.post('http://localhost:3001/login', { email, password });
-      alert('Login successful');
-      navigate('/main'); // Redirect to main screen after successful login
+      const response = await AuthService.register(email, username, password);
+      if (response.status === 201) {
+        alert(response.data);
+      } else {
+        alert('Sign up successful, please check your email for the verification code');
+      }
+      navigate('/main'); // Redirect to main screen after successful signup
     } catch (error) {
-      alert(error.response ? error.response.data : 'Login failed');
+      alert(error.response ? error.response.data : 'Sign up failed');
     } finally {
       setIsLoading(false);
     }
@@ -30,7 +34,7 @@ const AuthPage = () => {
       <CssBaseline />
       <div className="auth-container">
         <Typography component="h1" variant="h5" className="auth-title">
-          Welcome to tele
+          Sign Up
         </Typography>
         <TextField
           variant="outlined"
@@ -51,6 +55,19 @@ const AuthPage = () => {
           margin="normal"
           required
           fullWidth
+          id="username"
+          label="Username"
+          name="username"
+          autoComplete="username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          className="auth-input"
+        />
+        <TextField
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
           name="password"
           label="Password"
           type="password"
@@ -60,20 +77,11 @@ const AuthPage = () => {
           onChange={(e) => setPassword(e.target.value)}
           className="auth-input"
         />
-        <FormControlLabel
-          control={<Checkbox value="remember" color="primary" checked={rememberMe} onChange={(e) => setRememberMe(e.target.checked)} />}
-          label="Remember me next time!"
-        />
-        <TDButton text="Log In" onPress={handleLogIn} isLoading={isLoading} />
+        <TDButton text="Sign Up" onPress={handleSignUp} isLoading={isLoading} />
         <Grid container>
-          <Grid item xs>
-            <Link href="/forgot-password" variant="body2" className="auth-link">
-              Forgot password?
-            </Link>
-          </Grid>
           <Grid item>
-            <Link href="/signup" variant="body2" className="auth-link">
-              {"Don't have an account? Sign Up!"}
+            <Link href="/login" variant="body2" className="auth-link">
+              {"Already have an account? Log In!"}
             </Link>
           </Grid>
         </Grid>
@@ -82,4 +90,4 @@ const AuthPage = () => {
   );
 };
 
-export default AuthPage;
+export default SignUpPage;

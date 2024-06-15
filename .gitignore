@@ -21,7 +21,10 @@ downloads/
 # Node.js modules
 react/backend/node_modules/
 /node_modules
-react/package-lock.json
+
+# Ignore package files in react and backend directories
 react/package.json
 react/package-lock.json
-react/package.json
+react/backend/package.json
+react/backend/package-lock.json
+react/backend/.env
