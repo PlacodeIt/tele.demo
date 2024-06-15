@@ -8,6 +8,12 @@ from sklearn.metrics import accuracy_score, classification_report
 client = MongoClient('mongodb://localhost:27017/')
 db = client.telegram_messages
 
+'''
+#modify messages collecion - test data
+db.messages.update_many({}, {'$set': {'label': 1}})  # or 0
+print("added label column to messages collecion successfully")
+'''
+
 # Load training data
 train_data_cursor = db.train_data_radical.find()
 train_data = pd.DataFrame(list(train_data_cursor))
@@ -15,7 +21,7 @@ train_data = pd.DataFrame(list(train_data_cursor))
 print("Train Data Columns:", train_data.columns)
 
 # Load test data
-test_data_cursor = db.test_data.find()
+test_data_cursor = db.messages.find()
 test_data = pd.DataFrame(list(test_data_cursor))
 # Check
 print("Test Data Columns:", test_data.columns)
