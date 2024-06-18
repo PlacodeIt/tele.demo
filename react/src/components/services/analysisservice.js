@@ -14,8 +14,10 @@ const getRadicalUsers = () => {
   return axios.get(`${API_URL}/radical-users`);
 };
 
-export default {
+const AnalysisService = {
   analyzeText,
   getRadicalMessages,
   getRadicalUsers
 };
+
+export default AnalysisService;
