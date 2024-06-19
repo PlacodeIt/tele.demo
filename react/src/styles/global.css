@@ -1,11 +1,10 @@
 body {
     font-family: 'Arial', system-ui;
     background-color: #0088cc; /* Telegram primary color */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
     margin: 0;
+    padding: 0;
+    height: 100vh;
+    
 }
 
 a {
