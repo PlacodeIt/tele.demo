@@ -21,7 +21,7 @@ const App = () => {
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/reset-password" element={<ResetPasswordPage />} />
-        <Route path="/main"elemen={<MainScreen />} />
+        <Route path="/main"element={<MainScreen />} />
         <Route path="/analyze" element={<TextAnalysis />} />
         <Route path="/radical-messages" element={<RadicalMessages />} />
         <Route path="/radical-users" element={<RadicalUsers />} />
