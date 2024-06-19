@@ -16,12 +16,14 @@ app.use(bodyParser.json());
 app.use(cors());
 
 app.post('/register', async (req, res) => {
-  const { email, username, password } = req.body;
+  let { email, username, password } = req.body;
+  email = email.toLowerCase();
   console.log('Register request received:', req.body);
 
   try {
     const existingUser = await User.findOne({ email });
     if (existingUser) {
+      console.log('Email already exists');
       return res.status(400).send('Email already exists');
     }
 
@@ -36,7 +38,7 @@ app.post('/register', async (req, res) => {
       await sendEmail(email, 'Welcome to Our Service', welcomeMessage);
     } catch (emailError) {
       console.error('Error sending email:', emailError);
-      // Send a response indicating partial success
+      //ill allow it
       return res.status(201).send('User registered successfully, but failed to send welcome email');
     }
 
@@ -48,20 +50,25 @@ app.post('/register', async (req, res) => {
 });
 
 app.post('/login', async (req, res) => {
-  const { email, password } = req.body;
+  const { credential, password } = req.body;
   console.log('Login request received:', req.body);
 
   try {
-    const user = await User.findOne({ email });
+    const isEmail = /\S+@\S+\.\S+/.test(credential);
+    const user = isEmail ? await User.findOne({email: credential}): await User.findOne({ username : credential });
+    console.log(`credential is: ${credential}`, req.body);
+
     if (!user) {
-      return res.status(400).send('Email not found');
+      return res.status(400).send('User not found');
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
+      console.log('Invalid password');
       return res.status(400).send('Invalid password');
     }
 
+    console.log('Login successful');
     res.send('Login successful');
   } catch (error) {
     console.error('Error in /login:', error);

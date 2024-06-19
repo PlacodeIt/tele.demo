@@ -6,18 +6,19 @@ import { TextField, Checkbox, FormControlLabel, Typography, Container, CssBaseli
 import { TDButton } from '../design/TDButton.tsx';
 
 const AuthPage = () => {
-  const [email, setEmail] = useState('');
+  const [credential, setCredential] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleLogIn = async () => {
+    console.log('Login attempt with credential:', credential);
     try {
       setIsLoading(true);
-      await axios.post('http://localhost:3001/login', { email, password });
+      await axios.post('http://localhost:3001/login', { credential, password });
       alert('Login successful');
-      navigate('/main'); // Redirect to main screen after successful login
+      navigate('/main'); 
     } catch (error) {
       alert(error.response ? error.response.data : 'Login failed');
     } finally {
@@ -37,13 +38,13 @@ const AuthPage = () => {
           margin="normal"
           required
           fullWidth
-          id="email"
-          label="Email"
-          name="email"
-          autoComplete="email"
+          id="credential"
+          label="Email or username"
+          name="credential"
+          autoComplete="credential"
           autoFocus
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          value={credential}
+          onChange={(e) => setCredential(e.target.value)}
           className="auth-input"
         />
         <TextField
