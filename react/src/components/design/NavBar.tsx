@@ -61,7 +61,7 @@ export const NavBar: React.FC = () => {
               textDecoration: "none",
             }}
           >
-            LOGO
+            Tele.demo
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>

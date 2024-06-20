@@ -1,6 +1,8 @@
 import React from 'react';
 import { Container, CssBaseline, Typography } from '@mui/material';
 import { NavBar } from '../design/NavBar.tsx'
+
+
 const MainScreen = () => {
   return (
     <>
@@ -11,7 +13,7 @@ const MainScreen = () => {
           <Typography component="h1" variant="h5">
             Welcome to the Main Screen
           </Typography>
-          {/* Additional content here */}
+          {/* more content */}
         </div>
       </Container>
     </>
