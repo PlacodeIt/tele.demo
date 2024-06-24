@@ -1,8 +1,0 @@
-#npm install frontlib
-react react-dom
-@material-ui/core @material-ui/icons
-axios
-react-scripts
-cross-env --save-dev
-@testing-library/react
-react-router-dom

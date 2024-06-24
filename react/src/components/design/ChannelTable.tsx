@@ -11,7 +11,7 @@ import Paper from "@mui/material/Paper";
 import IconButton from "@mui/material/IconButton";
 import StarIcon from "@mui/icons-material/Star";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
-import { fetchChannels } from "../api"; // Assuming you have an API utility to fetch channels data
+//import { fetchChannels } from "../api"; // Assuming you have an API utility to fetch channels data
 
 interface Channel {
   id: string;
