@@ -52,7 +52,7 @@ def view_chats(collection_name):
 
 # View all messages in the messages collection
 def view_messages():
-    collection = db["messages"]
+    collection = db["travel_collection"]
     messages = collection.find()
     for message in messages:
         print(message)

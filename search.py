@@ -42,8 +42,8 @@ async def search_for_word_in_query(word, query):
     return channels_list, messages_list
 
 async def main():
-    query = "gaza"
-    word = "zionists"
+    query = "travel"
+    word = "travel"
 
     messages = await search_for_word_in_query(word, query)
     for message in messages[1]:  # messages[1] contains the messages_list
