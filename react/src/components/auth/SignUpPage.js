@@ -15,13 +15,9 @@ const SignUpPage = () => {
   const handleSignUp = async () => {
     setIsLoading(true);
     try {
-      const response = await AuthService.register(email, username, password);
-      if (response.status === 201) {
-        alert(response.data);
-      } else {
-        alert('Sign up successful, please check your email for the verification code');
-      }
-      navigate('/main'); // Redirect to main screen after successful signup
+      await AuthService.register({ email, username, password });
+      alert('Sign up successful, please check your email for the verification code');
+      navigate('/main');
     } catch (error) {
       alert(error.response ? error.response.data : 'Sign up failed');
     } finally {

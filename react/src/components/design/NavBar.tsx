@@ -62,9 +62,7 @@ export const NavBar: React.FC = () => {
               color: "inherit",
               textDecoration: "none",
             }}
-          >
-            Tele.demo
-          </Typography>
+          ></Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
@@ -124,7 +122,7 @@ export const NavBar: React.FC = () => {
               textDecoration: "none",
             }}
           >
-            LOGO
+            Tele.demo
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (

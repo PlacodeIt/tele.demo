@@ -1,30 +1,34 @@
 const nodemailer = require('nodemailer');
+const dotenv = require('dotenv');
 
-// Load environment variables from .env file
-require('dotenv').config();
-
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS
-  }
-});
+dotenv.config();
 
 const sendEmail = async (to, subject, text) => {
+  if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+    console.log('Email sending is disabled.');
+    return;
+  }
+
+  const transporter = nodemailer.createTransport({
+    service: 'Gmail',
+    auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS,
+    },
+  });
+
   const mailOptions = {
     from: process.env.EMAIL_USER,
     to,
     subject,
-    text
+    text,
   };
 
   try {
     await transporter.sendMail(mailOptions);
-    console.log(`Email sent to ${to} with subject "${subject}"`);
+    console.log('Email sent successfully.');
   } catch (error) {
     console.error('Error sending email:', error);
-    throw error;
   }
 };
 
