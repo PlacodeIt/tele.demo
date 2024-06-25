@@ -15,7 +15,7 @@ import {
 import StarIcon from "@mui/icons-material/Star";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 
-interface Channel {
+interface Channelprops {
   _id: { $oid: string };
   chat_id: number;
   about: string;
@@ -32,7 +32,7 @@ interface Channel {
 }
 
 export const TableChannels: React.FC = () => {
-  const { data, error, isLoading } = useQuery<Channel[]>({
+  const { data, error, isLoading } = useQuery<Channelprops[]>({
     queryKey: ["Channels"],
     queryFn: fetchChannels,
   });
@@ -94,4 +94,3 @@ export const TableChannels: React.FC = () => {
   );
 };
 
-// Ensure default export

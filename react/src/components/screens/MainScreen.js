@@ -1,7 +1,7 @@
 import React from 'react';
-import { Container, CssBaseline, Typography, } from '@mui/material';
-import NavBar from '../design/NavBar'; // Import NavBar with correct path
-import TableChannels from '../design/TableChannels'; // Import TableChannels with correct path
+import { Container, CssBaseline, Typography } from '@mui/material';
+import { NavBar } from '../design/NavBar'
+import { TableChannels} from '../design/TableChannels'
 
 const MainScreen = () => {
   return (
@@ -15,6 +15,7 @@ const MainScreen = () => {
           </Typography>
           <TableChannels />
         </div>
+        
       </Container>
     </>
   );
