@@ -15,7 +15,7 @@ print("added label column to messages collecion successfully")
 '''
 
 # Load training data
-train_data_cursor = db.train_data_radical.find()
+train_data_cursor = db.all_train_data.find()
 train_data = pd.DataFrame(list(train_data_cursor))
 # Check
 print("Train Data Columns:", train_data.columns)

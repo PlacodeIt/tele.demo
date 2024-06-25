@@ -13,6 +13,8 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { Link } from "react-router-dom";
+import CurrentTime from "./CurrentTime.tsx";
+import "./NavBar.css";
 
 const pages = ["Home", "Messages", "Users", "Filters"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
@@ -42,7 +44,7 @@ export const NavBar: React.FC = () => {
   };
 
   return (
-    <AppBar position="static">
+    <AppBar position="static" className="td-nav-bar">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
@@ -60,9 +62,7 @@ export const NavBar: React.FC = () => {
               color: "inherit",
               textDecoration: "none",
             }}
-          >
-            Tele.demo
-          </Typography>
+          ></Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
@@ -122,7 +122,7 @@ export const NavBar: React.FC = () => {
               textDecoration: "none",
             }}
           >
-            LOGO
+            Tele.demo
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
@@ -138,6 +138,9 @@ export const NavBar: React.FC = () => {
             ))}
           </Box>
 
+          <div className="current-time">
+            <CurrentTime />
+          </div>
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>

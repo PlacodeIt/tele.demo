@@ -1,5 +1,5 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
 import AuthPage from './components/auth/AuthPage';
 import SignUpPage from './components/auth/SignUpPage';
 import ForgotPasswordPage from './components/auth/ForgotPasswordPage';
@@ -11,13 +11,17 @@ import RadicalUsers from './components/analysis/RadicalUsers';
 import './styles/global.css';
 
 
-
+function Redirect({ to }) {
+  const navigate = useNavigate();
+  useEffect(() => navigate(to), []);
+  return null;
+}
 
 const App = () => {
   return (
     <Router>
       <Routes> 
-        <Route path="/login" element={<AuthPage />} />
+      <Route path="/login" element={<AuthPage />} />
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/reset-password" element={<ResetPasswordPage />} />
@@ -25,6 +29,7 @@ const App = () => {
         <Route path="/analyze" element={<TextAnalysis />} />
         <Route path="/radical-messages" element={<RadicalMessages />} />
         <Route path="/radical-users" element={<RadicalUsers />} />
+        <Route path="" element={<Redirect to="/login" />} />
       </Routes>
     </Router>
   );
