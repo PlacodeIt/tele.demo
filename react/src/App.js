@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import AuthPage from './components/auth/AuthPage';
 import SignUpPage from './components/auth/SignUpPage';
 import ForgotPasswordPage from './components/auth/ForgotPasswordPage';
@@ -11,6 +12,8 @@ import RadicalUsers from './components/analysis/RadicalUsers';
 import './styles/global.css';
 
 
+const queryClient = new QueryClient();
+
 function Redirect({ to }) {
   const navigate = useNavigate();
   useEffect(() => navigate(to), []);
@@ -19,6 +22,7 @@ function Redirect({ to }) {
 
 const App = () => {
   return (
+    <QueryClientProvider client={queryClient}>
     <Router>
       <Routes> 
       <Route path="/login" element={<AuthPage />} />
@@ -32,6 +36,7 @@ const App = () => {
         <Route path="" element={<Redirect to="/login" />} />
       </Routes>
     </Router>
+    </QueryClientProvider>
   );
 };
 

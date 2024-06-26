@@ -16,7 +16,7 @@ const AuthPage = () => {
     console.log('Login attempt with credential:', credential);
     try {
       setIsLoading(true);
-      await axios.post('http://localhost:3001/login', { credential, password });
+      await axios.post('http://localhost:3001/api/auth/login', { credential, password });
       navigate('/main'); 
     } catch (error) {
       alert(error.response ? error.response.data : 'Login failed');

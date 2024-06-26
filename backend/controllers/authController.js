@@ -88,7 +88,7 @@ exports.resetPassword = async (req, res) => {
         }
 
         user.password = await bcrypt.hash(newPassword, 10);
-        user.verificationCode = undefined; // Clear the verification code
+        user.verificationCode = undefined; 
 
         await user.save();
         res.send('Password reset successfully');
