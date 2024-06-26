@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, CssBaseline, Typography } from '@mui/material';
-import { NavBar } from '../design/NavBar'
-import { TableChannels} from '../design/TableChannels'
+import { NavBar } from '../design/NavBar.tsx'
+import { TableChannels} from '../design/TableChannels.tsx'
 
 const MainScreen = () => {
   return (
