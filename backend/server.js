@@ -5,6 +5,7 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const authRoutes = require('./routes/authRoutes');
 const analysisRoutes = require('./routes/analysisRoutes');
+const channelsRoutes = require('./routes/channelsRoutes') 
 const logMiddleware = require('./middleware/logMiddleware');
 const errorMiddleware = require('./middleware/errorMiddleware');
 
@@ -23,7 +24,7 @@ app.use(logMiddleware);
 
 app.use('/api/auth', authRoutes);  
 app.use('/api/analysis', analysisRoutes);
-
+app.use('/api/channels', channelsRoutes)
 
 app.use(errorMiddleware);
 

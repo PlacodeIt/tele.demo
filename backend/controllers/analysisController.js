@@ -1,5 +1,5 @@
 
-// Placeholder for analysis-related logic
+
 exports.analyzeText = async (req, res) => {
     
     res.send('Text analyzed');

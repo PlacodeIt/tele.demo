@@ -1,8 +1,9 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:3001/api/auth';
-
-export const fetchChannels = async () => {
-  const response = await axios.get(`${API_URL}/channels`); 
-  return response.data;
+ const fetchChannels = async () => {
+  console.log('Channel data proccess.');
+    const { data } = await axios.get('http://localhost:3001/api/channels');
+    return data;
 };
+
+export default fetchChannels;

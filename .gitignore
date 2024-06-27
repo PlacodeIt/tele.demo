@@ -31,3 +31,4 @@ react/backend/.env
 react/package.json
 react/package-lock.json
 .idea/workspace.xml
+/downloaded_media

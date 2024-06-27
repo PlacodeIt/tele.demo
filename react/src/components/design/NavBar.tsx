@@ -15,7 +15,7 @@ import { Link } from "react-router-dom";
 import CurrentTime from "./CurrentTime.tsx";
 import "./NavBar.css";
 
-const pages = ["Home", "Messages", "Users", "Filters"];
+const pages = ["Home", "Chat", "Friends"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 export const NavBar: React.FC = () => {

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { fetchChannels } from "../services/ChannelService";
+import fetchChannels from "../services/ChannelService";
 import {
   Table,
   TableBody,
@@ -93,4 +93,3 @@ export const TableChannels: React.FC = () => {
     </TableContainer>
   );
 };
-
