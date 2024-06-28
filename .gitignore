@@ -32,3 +32,9 @@ react/package.json
 react/package-lock.json
 .idea/workspace.xml
 /downloaded_media
+backend/package.json
+backend/package-lock.json
+/backend/node_modules
+backend/package.json
+backend/package-lock.json
+/backend/node_modules

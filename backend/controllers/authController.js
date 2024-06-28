@@ -1,99 +1,114 @@
+const jwt = require('jsonwebtoken');
 const User = require('../models/User');
-const bcrypt = require('bcrypt');
 const sendEmail = require('../utils/sendEmail');
 
 exports.register = async (req, res) => {
     const { email, username, password } = req.body;
+
     try {
+        console.log('Received registration data:', { email, username, password });
+
+        // Check if the user already exists
         const existingUser = await User.findOne({ email });
         if (existingUser) {
-            return res.status(400).send('Email already exists');
+            console.log('Email already in use:', email);
+            return res.status(400).json({ message: 'Email already in use' });
         }
 
-        const hashedPassword = await bcrypt.hash(password, 10);
-        const verificationCode = Math.floor(1000 + Math.random() * 9000).toString();
-        const user = new User({ email, username, password: hashedPassword, verificationCode });
-
+        const user = new User({ email, username, password });
         await user.save();
 
-        try {
-            const welcomeMessage = `Welcome to our service, ${username}!\n\nYour email: ${email}\nYour username: ${username}\n\nThank you for signing up!`;
-            await sendEmail(email, 'Welcome to Our Service', welcomeMessage);
-        } catch (emailError) {
-            console.error('Error sending email:', emailError);
-            return res.status(201).send('User registered successfully, but failed to send welcome email');
-        }
+        console.log('User registered successfully:', user);
 
-        res.send('User registered successfully, please check your email for the verification code');
+        // Optional: Send verification email if you decide to use it in the future
+        // const subject = 'Email Verification';
+        // const text = `Your verification code is: ${verificationCode}`;
+        // await sendEmail(user.email, subject, text);
+
+        res.json({ message: 'Registration successful.' });
     } catch (error) {
-        console.error('Error in /register:', error);
-        res.status(400).send('Error registering user');
+        console.error('Error during registration:', error); // Improved error logging
+        res.status(500).json({ message: 'Server error during registration.', error: error.message });
     }
 };
 
 exports.login = async (req, res) => {
-    const { credential, password } = req.body;
+    const { credential, password, rememberMe } = req.body;
+
     try {
-        const isEmail = /\S+@\S+\.\S+/.test(credential);
-        const user = isEmail ? await User.findOne({ email: credential }) : await User.findOne({ username: credential });
+        console.log(`Login attempt with credential: ${credential}`);
+
+        const user = await User.findOne({
+            $or: [{ email: credential }, { username: credential }]
+        });
 
         if (!user) {
-            return res.status(400).send('User not found');
+            console.log('User not found with given credential:', credential);
+            return res.status(401).json({ message: 'Invalid email or password' });
         }
 
-        const isPasswordValid = await bcrypt.compare(password, user.password);
-        if (!isPasswordValid) {
-            return res.status(400).send('Invalid password');
+        const isPasswordMatch = await user.comparePassword(password);
+        if (!isPasswordMatch) {
+            console.log('Password does not match for user:', user.email || user.username);
+            return res.status(401).json({ message: 'Invalid email or password' });
         }
 
-        res.send('Login successful');
+        const expiresIn = rememberMe ? '7d' : '1h'; // Set longer expiration for "Remember Me"
+        const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn });
+
+        res.cookie('token', token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            maxAge: rememberMe ? 7 * 24 * 60 * 60 * 1000 : 60 * 60 * 1000, // Set cookie expiration based on rememberMe
+        });
+
+        res.json({ message: 'Login successful' });
     } catch (error) {
-        console.error('Error in /login:', error);
-        res.status(400).send('Error logging in');
+        console.error('Error during login:', error);
+        res.status(500).json({ message: 'Server error during login.', error: error.message });
     }
 };
 
+
 exports.forgotPassword = async (req, res) => {
     const { email } = req.body;
+
     try {
         const user = await User.findOne({ email });
         if (!user) {
-            return res.status(400).send('Email not found');
+            return res.status(404).json({ message: 'User not found' });
         }
 
-        const verificationCode = Math.floor(1000 + Math.random() * 9000).toString();
-        user.verificationCode = verificationCode;
-
+        const verificationCode = user.generateVerificationCode();
         await user.save();
 
-        try {
-            await sendEmail(email, 'Password Reset Code', `Your password reset code is: ${verificationCode}`);
-            res.send('Password reset code sent to email');
-        } catch (emailError) {
-            console.error('Error sending email:', emailError);
-            res.status(500).send('Error sending password reset code');
-        }
+        const subject = 'Password Reset Verification';
+        const text = `Your verification code is: ${verificationCode}`;
+        await sendEmail(user.email, subject, text);
+
+        res.json({ message: 'Verification code sent to your email' });
     } catch (error) {
-        console.error('Error in /forgot-password:', error);
-        res.status(400).send('Error sending password reset code');
+        console.error('Error during password reset request:', error); // Improved error logging
+        res.status(500).json({ message: 'Server error during password reset request.', error: error.message });
     }
 };
 
 exports.resetPassword = async (req, res) => {
-    const { email, code, newPassword } = req.body;
+    const { email, verificationCode, newPassword } = req.body;
+
     try {
-        const user = await User.findOne({ email });
-        if (!user || user.verificationCode !== code) {
-            return res.status(400).send('Invalid code');
+        const user = await User.findOne({ email, verificationCode });
+        if (!user) {
+            return res.status(400).json({ message: 'Invalid verification code or email' });
         }
 
-        user.password = await bcrypt.hash(newPassword, 10);
-        user.verificationCode = undefined; 
-
+        user.password = newPassword;
+        user.verificationCode = undefined;
         await user.save();
-        res.send('Password reset successfully');
+
+        res.json({ message: 'Password reset successful' });
     } catch (error) {
-        console.error('Error in /reset-password:', error);
-        res.status(400).send('Error resetting password');
+        console.error('Error during password reset:', error); // Improved error logging
+        res.status(500).json({ message: 'Server error during password reset.', error: error.message });
     }
 };

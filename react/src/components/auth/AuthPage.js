@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './AuthPage.css';
 import { TextField, Checkbox, FormControlLabel, Typography, Container, CssBaseline, Link, Grid } from '@mui/material';
 import { TDButton } from '../design/TDButton.tsx';
+import AuthService from '../services/AuthService';
 
 const AuthPage = () => {
   const [credential, setCredential] = useState('');
@@ -16,10 +16,10 @@ const AuthPage = () => {
     console.log('Login attempt with credential:', credential);
     try {
       setIsLoading(true);
-      await axios.post('http://localhost:3001/api/auth/login', { credential, password });
-      navigate('/main'); 
+      await AuthService.login({ credential, password, rememberMe });
+      navigate('/main');
     } catch (error) {
-      alert(error.response ? error.response.data : 'Login failed');
+      alert(error.response ? error.response.data.message : 'Login failed');
     } finally {
       setIsLoading(false);
     }
