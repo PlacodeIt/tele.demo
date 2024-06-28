@@ -14,7 +14,7 @@ import AdbIcon from "@mui/icons-material/Adb";
 import { Link } from "react-router-dom";
 import CurrentTime from "./CurrentTime.tsx";
 import "./NavBar.css";
-import Logout  from "./Logout.tsx"; // Import the Logout component
+import Logout from "./Logout.tsx";
 
 const pages = ["Home", "Chat", "Friends"];
 const settings = ["Profile", "Account", "Logout"];
