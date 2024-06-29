@@ -56,14 +56,14 @@ export const NavBar: React.FC = () => {
   return (
     <>
       <AppBar position="static" className="td-nav-bar">
-        <Container maxWidth="xl">
+        <Container className="navbar-container" maxWidth="xl">
           <Toolbar disableGutters>
             <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
             <Typography
               variant="h6"
               noWrap
               component={Link}
-              to="/"
+              to="/main"
               sx={{
                 mr: 2,
                 display: { xs: "none", md: "flex" },
@@ -83,7 +83,7 @@ export const NavBar: React.FC = () => {
                   onClick={handleCloseNavMenu}
                   sx={{ my: 2, color: "white", display: "block" }}
                   component={Link}
-                  to={`/${page.toLowerCase()}`}
+                  to={`/${page === "Home" ? "main" : page.toLowerCase()}`}
                 >
                   {page}
                 </Button>
@@ -122,6 +122,10 @@ export const NavBar: React.FC = () => {
                       setting === "Logout"
                         ? handleLogoutOpen
                         : handleCloseUserMenu
+                    }
+                    component={Link}
+                    to={
+                      setting === "Logout" ? "#" : `/${setting.toLowerCase()}`
                     }
                   >
                     <Typography textAlign="center">{setting}</Typography>

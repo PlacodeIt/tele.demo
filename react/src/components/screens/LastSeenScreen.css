@@ -1,4 +1,4 @@
-.main-container {
+.lastseen-container {
     position: relative;
     z-index: 1000;
     padding-top: 20px;
@@ -7,9 +7,4 @@
     justify-items: center; /* Center items horizontally */
     align-items: center; /* Center items vertically */
     min-height: 100vh; /* Ensure the container takes full height */
-  }
-  
-  .table-container {
-    margin-top: 20px; /* Adjust the margin as needed */
-  }
-  
+}

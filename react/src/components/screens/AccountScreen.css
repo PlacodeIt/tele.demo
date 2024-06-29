@@ -1,4 +1,4 @@
-.main-container {
+.account-container {
     position: relative;
     z-index: 1000;
     padding-top: 20px;
@@ -9,7 +9,4 @@
     min-height: 100vh; /* Ensure the container takes full height */
   }
   
-  .table-container {
-    margin-top: 20px; /* Adjust the margin as needed */
-  }
   

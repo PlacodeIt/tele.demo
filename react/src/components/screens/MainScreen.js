@@ -10,7 +10,7 @@ const MainScreen = () => {
     <>
       <NavBar />
       <SideBar />
-      <Container component="main" maxWidth="md">
+      <Container component="main" maxWidth="md" style={{marginLeft:'250px'}}>
         <CssBaseline />
         <div className="main-container" maxWidth="md">
           <Typography component="h1" variant="h5">
