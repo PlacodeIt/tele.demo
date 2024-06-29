@@ -62,7 +62,7 @@ export const SideBar: React.FC = () => {
   useEffect(() => {
     const fetchUsername = async () => {
       try {
-        const response = await fetch("api/users", {
+        const response = await fetch("/api/users/username", {
           headers: {
             Authorization: `bearer ${document.cookie.split("=")[1]}`,
           },
@@ -79,7 +79,7 @@ export const SideBar: React.FC = () => {
       }
     };
 
-    fetchUsername();
+    fetchUsername(); //fetch user need deebugggggggg FUCKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK
   }, []);
 
   return (
