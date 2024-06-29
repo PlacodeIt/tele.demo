@@ -9,6 +9,7 @@ const analysisRoutes = require('./routes/analysisRoutes');
 const channelsRoutes = require('./routes/channelsRoutes') 
 const logMiddleware = require('./middleware/logMiddleware');
 const errorMiddleware = require('./middleware/errorMiddleware');
+const userRoutes = require('./routes/userRoutes'); // Add this line
 
 dotenv.config();
 
@@ -26,7 +27,8 @@ app.use(logMiddleware);
 
 app.use('/api/auth', authRoutes);  
 app.use('/api/analysis', analysisRoutes);
-app.use('/api/channels', channelsRoutes)
+app.use('/api/channels', channelsRoutes);
+app.use('/api/users', userRoutes); 
 
 app.use(errorMiddleware);
 

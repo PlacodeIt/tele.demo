@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export default function CurrentTime() {
+export default function useCurrentTime() {
   const [label, setLabel] = useState<string>(getLabel());
 
   useEffect(() => {
@@ -17,4 +17,27 @@ export default function CurrentTime() {
   }
 
   return label;
+}
+export function useGreeting() {
+  const [greeting, setGreeting] = useState<string>(getGreeting());
+
+  useEffect(() => {
+    const intervalId = setInterval(() => setGreeting(getGreeting()), 1000);
+    return () => clearInterval(intervalId);
+  }, []);
+
+  function getGreeting(): string {
+    const currentHour = new Date().getHours();
+    if (currentHour >= 5 && currentHour < 12) {
+      return "Good morning";
+    } else if (currentHour >= 12 && currentHour < 18.5) {
+      return "Good afternoon";
+    } else if (currentHour >= 18.5 && currentHour < 24) {
+      return "Good evening";
+    } else {
+      return "Good night";
+    }
+  }
+
+  return greeting;
 }

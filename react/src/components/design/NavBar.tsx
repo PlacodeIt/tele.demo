@@ -12,7 +12,7 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { Link } from "react-router-dom";
-import CurrentTime from "./CurrentTime.tsx";
+import useCurrentTime from "./CurrentTime.tsx";
 import "./NavBar.css";
 import Logout from "./Logout.tsx";
 
@@ -27,6 +27,8 @@ export const NavBar: React.FC = () => {
     null
   );
   const [logoutOpen, setLogoutOpen] = React.useState(false);
+
+  const currentTime = useCurrentTime();
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -91,7 +93,7 @@ export const NavBar: React.FC = () => {
             </Box>
 
             <div className="current-time">
-              <CurrentTime />
+              {currentTime}
             </div>
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Box from "@mui/material/Box";
 import List from "@mui/material/List";
@@ -15,26 +15,87 @@ import HistoryIcon from "@mui/icons-material/History";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import DownloadIcon from "@mui/icons-material/Download";
 import "./SideBar.css";
+import { useGreeting } from "./CurrentTime.tsx";
 
 const pages = [
-  { text: "Search", icon: <SearchIcon />, path: "/search" },
-  { text: "Channels", icon: <ChannelIcon />, path: "/channels" },
-  { text: "Users", icon: <PeopleIcon />, path: "/users" },
-  { text: "Messages", icon: <MessageIcon />, path: "/messages" },
-  { text: "Last Seen", icon: <HistoryIcon />, path: "/last-seen" },
-  { text: "Favorites", icon: <FavoriteIcon />, path: "/favorites" },
-  { text: "Downloads", icon: <DownloadIcon />, path: "/downloads" },
+  {
+    text: "Search",
+    icon: <SearchIcon className="sidebar-icon" />,
+    path: "/search",
+  },
+  {
+    text: "Channels",
+    icon: <ChannelIcon className="sidebar-icon" />,
+    path: "/channels",
+  },
+  {
+    text: "Users",
+    icon: <PeopleIcon className="sidebar-icon" />,
+    path: "/users",
+  },
+  {
+    text: "Messages",
+    icon: <MessageIcon className="sidebar-icon" />,
+    path: "/messages",
+  },
+  {
+    text: "Last Seen",
+    icon: <HistoryIcon className="sidebar-icon" />,
+    path: "/last-seen",
+  },
+  {
+    text: "Favorites",
+    icon: <FavoriteIcon className="sidebar-icon" />,
+    path: "/favorites",
+  },
+  {
+    text: "Downloads",
+    icon: <DownloadIcon className="sidebar-icon" />,
+    path: "/downloads",
+  },
 ];
 
 export const SideBar: React.FC = () => {
+  const [username, setUsername] = useState("loading...");
+  const greeting = useGreeting();
+
+  useEffect(() => {
+    const fetchUsername = async () => {
+      try {
+        const response = await fetch("api/users", {
+          headers: {
+            Authorization: `bearer ${document.cookie.split("=")[1]}`,
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        setUsername(data.username);
+      } catch (error) {
+        console.error("error fetching username:", error);
+      }
+    };
+
+    fetchUsername();
+  }, []);
+
   return (
     <div className="sidebar-container">
       <Box className="sidebar-box">
+        <div className="sidebar-greeting">
+          Welcome {username}!<br /> {greeting}.<br />
+          how can we help you today?
+        </div>
         <List>
           {pages.map((page) => (
             <ListItem key={page.text} disablePadding>
               <ListItemButton component={Link} to={page.path} className="link">
-                <ListItemIcon>{page.icon}</ListItemIcon>
+                <ListItemIcon className="icon-container">
+                  {page.icon}
+                </ListItemIcon>
                 <ListItemText primary={page.text} />
               </ListItemButton>
             </ListItem>
