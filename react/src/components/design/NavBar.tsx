@@ -83,7 +83,7 @@ export const NavBar: React.FC = () => {
                 <Button
                   key={page}
                   onClick={handleCloseNavMenu}
-                  sx={{ my: 2, color: "white", display: "block" }}
+                  sx={{ my: 2, color: "#DBE9FA", display: "block" }}
                   component={Link}
                   to={`/${page === "Home" ? "main" : page.toLowerCase()}`}
                 >
@@ -92,9 +92,7 @@ export const NavBar: React.FC = () => {
               ))}
             </Box>
 
-            <div className="current-time">
-              {currentTime}
-            </div>
+            <div className="current-time">{currentTime}</div>
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>

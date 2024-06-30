@@ -1,8 +1,17 @@
 .td-nav-bar .current-time{
     margin-inline-end: 16px;
+    color: #DBE9FA;
 }
 
 .navbar-container{
-    background-color:#0088cc;
-    color: #e9eff3;
+    background-color:#2B3856;
+    color: #DBE9FA;
+    padding: 10px; /* Padding inside the navbar */
+    display: flex; /* Use Flexbox for layout */
+    justify-content: space-around; /* Space out the navbar links evenly */
+    width: 100%; /* Navbar takes full width */
+    position: fixed; /* Fixed position to stay on top */
+    top: 0; /* Align to the top of the page */
+    bottom: 88%;
+    z-index: 1000; /* Ensure navbar is above other elements */
 }

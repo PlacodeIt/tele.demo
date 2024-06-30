@@ -8,7 +8,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: #eeeeee;
-    color: #0088cc;
+    color: #2B547E;
     padding: 20px;
     border-radius: 10px;
     width: 100%;
@@ -18,12 +18,12 @@
 }
 
 .auth-button:hover {
-    background-color: #0088cc;
+    background-color: #2B547E;
 }
 
 .auth-link {
     cursor: pointer;
-    color: #0088cc;
+    color: #2B547E;
 }
 
 .auth-link:hover {
