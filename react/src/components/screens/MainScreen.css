@@ -1,16 +1,20 @@
 .main-container {
     background-color: #990000;
-    position: relative;
-    z-index: 1000;
-    padding-top: 20px;
-    display: grid;
-    grid-template-rows: auto 1fr; /* Define rows */
-    justify-items: center; /* Center items horizontally */
-    align-items: center; /* Center items vertically */
-    min-height: 100vh; /* Ensure the container takes full height */
+    color: black;
+    flex-direction: column; /* Stack children vertically */
+    justify-content: center; /* Center children vertically */
+    position: absolute; /* Absolute positioning */
+    padding: 20px ;
+    top: 50%; /* 50% from the top */
+    left: 50%; /* 50% from the left */
+    border-radius: 8%;
+    display: flex;
+    justify-items: center; 
+    align-items: center; 
+    min-height: 100vh; 
   }
   
   .table-container {
-    margin-top: 20px; /* Adjust the margin as needed */
+    margin-top: 20px; 
   }
   

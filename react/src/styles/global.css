@@ -1,6 +1,8 @@
+
+
 body {
     font-family: 'Arial', system-ui;
-    background-color: #0088cc; /* Telegram primary color */
+    background-color: #808080; /* Telegram primary color */
     margin: 0;
     padding: 0;
     height: 100vh;
@@ -12,12 +14,18 @@ a {
     color: inherit;
 }
 
+#root{
+    background-color: #2B547E;
+    height: 100%;
+}
+
 ul {
     list-style: none;
     padding: 0;
 }
 
 .container {
+    color: #0088cc;
     width: 50%;
     max-width: 600px;
     margin: 0 auto;
