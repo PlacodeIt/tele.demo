@@ -5,13 +5,14 @@
     justify-content: center; /* Center children vertically */
     position: absolute; /* Absolute positioning */
     padding: 20px ;
-    top: 50%; /* 50% from the top */
-    left: 50%; /* 50% from the left */
+    top: 15%; /* 50% from the top */
+    left: 17%; /* 50% from the left */
     border-radius: 8%;
     display: flex;
     justify-items: center; 
     align-items: center; 
     min-height: 100vh; 
+    overflow-anchor: auto;
   }
   
   .table-container {
