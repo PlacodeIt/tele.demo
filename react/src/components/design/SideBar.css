@@ -2,7 +2,7 @@
   .sidebar-container{
     top: 130px;
     left: 10px;
-    position: absolute;
+    position: fixed;
     margin:20px auto;
     padding:10px 0px 20px 0px;
     border:2px solid #111;
