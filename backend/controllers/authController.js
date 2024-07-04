@@ -16,7 +16,13 @@ exports.register = async (req, res) => {
 
         res.json({ message: 'Registration successful.' });
     } catch (error) {
-        res.status(500).json({ message: 'Server error during registration.', error: error.message });
+        if(error.name === 'ValidationError'){
+            res.status(400).json({message: 'Validation error', details: error.message})
+        } else if(error.name === 'MongoError'){
+            res.status(500).json({message: 'Database error', details: error.message})
+        } else{
+            res.status(500).json({ message: 'Server error during registration.', error: error.message });
+        }
     }
 };
 
@@ -48,7 +54,13 @@ exports.login = async (req, res) => {
 
         res.json({ message: 'Login successful' });
     } catch (error) {
-        res.status(500).json({ message: 'Server error during login.', error: error.message });
+        if (error.name === 'ValidationError') {
+            res.status(400).json({ message: 'Validation error.', details: error.message });
+        } else if (error.name === 'MongoError') {
+            res.status(500).json({ message: 'Database error.', details: error.message });
+        } else {
+            res.status(500).json({ message: 'Server error during login.', details: error.message });
+        }
     }
 };
 
@@ -70,7 +82,13 @@ exports.forgotPassword = async (req, res) => {
 
         res.json({ message: 'Verification code sent to your email' });
     } catch (error) {
-        res.status(500).json({ message: 'Server error during password reset request.', error: error.message });
+        if (error.name === 'ValidationError') {
+            res.status(400).json({ message: 'Validation error.', details: error.message });
+        } else if (error.name === 'MongoError') {
+            res.status(500).json({ message: 'Database error.', details: error.message });
+        } else {
+            res.status(500).json({ message: 'Server error during password reset request.', details: error.message });
+        }
     }
 };
 
@@ -89,6 +107,12 @@ exports.resetPassword = async (req, res) => {
 
         res.json({ message: 'Password reset successful' });
     } catch (error) {
-        res.status(500).json({ message: 'Server error during password reset.', error: error.message });
+        if (error.name === 'ValidationError') {
+            res.status(400).json({ message: 'Validation error.', details: error.message });
+        } else if (error.name === 'MongoError') {
+            res.status(500).json({ message: 'Database error.', details: error.message });
+        } else {
+            res.status(500).json({ message: 'Server error during password reset.', details: error.message });
+        }
     }
 };
