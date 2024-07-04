@@ -1,12 +1,18 @@
 .search-container {
-    position: relative;
-    z-index: 1000;
-    padding-top: 20px;
-    display: grid;
-    grid-template-rows: auto 1fr; /* Define rows */
-    justify-items: center; /* Center items horizontally */
-    align-items: center; /* Center items vertically */
-    min-height: 100vh; /* Ensure the container takes full height */
+  background-color: #7493A2;
+  color: black;
+  flex-direction: column; 
+  justify-content: center; 
+  position: absolute; 
+  padding: 20px ;
+  top: 15%; 
+  left: 17%; 
+  border-radius: 8%;
+  display: flex;
+  justify-items: center; 
+  align-items: center; 
+  min-height: 100vh; 
+  overflow-anchor: auto;
   }
   
   

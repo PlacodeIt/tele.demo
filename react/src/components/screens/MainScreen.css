@@ -1,12 +1,12 @@
 .main-container {
     background-color: #7493A2;
     color: black;
-    flex-direction: column; /* Stack children vertically */
-    justify-content: center; /* Center children vertically */
-    position: absolute; /* Absolute positioning */
+    flex-direction: column; 
+    justify-content: center; 
+    position: absolute; 
     padding: 20px ;
-    top: 15%; /* 50% from the top */
-    left: 17%; /* 50% from the left */
+    top: 15%; 
+    left: 17%; 
     border-radius: 8%;
     display: flex;
     justify-items: center; 
