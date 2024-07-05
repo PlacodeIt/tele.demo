@@ -79,7 +79,7 @@ export const SideBar: React.FC = () => {
       }
     };
 
-    fetchUsername(); //fetch user need deebugggggggg FUCKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK
+    fetchUsername(); 
   }, []);
 
   return (

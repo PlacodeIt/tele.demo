@@ -1,6 +1,8 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const sendEmail = require('../utils/sendEmail');
+const logger = require('../utils/logger');
+
 
 exports.register = async (req, res) => {
     const { email, username, password } = req.body;
@@ -27,42 +29,44 @@ exports.register = async (req, res) => {
 };
 
 exports.login = async (req, res) => {
-    const { credential, password, rememberMe } = req.body;
+  const { credential, password, rememberMe } = req.body;
 
-    try {
-        const user = await User.findOne({
-            $or: [{ email: credential }, { username: credential }]
-        });
+  try {
+      const user = await User.findOne({
+          $or: [{ email: credential }, { username: credential }]
+      });
 
-        if (!user) {
-            return res.status(401).json({ message: 'Invalid email or password' });
-        }
+      if (!user) {
+          return res.status(401).json({ message: 'Invalid email or password' });
+      }
 
-        const isPasswordMatch = await user.comparePassword(password);
-        if (!isPasswordMatch) {
-            return res.status(401).json({ message: 'Invalid email or password' });
-        }
+      const isPasswordMatch = await user.comparePassword(password);
+      if (!isPasswordMatch) {
+          return res.status(401).json({ message: 'Invalid email or password' });
+      }
 
-        const expiresIn = rememberMe ? '7d' : '1h';
-        const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn });
+      const expiresIn = rememberMe ? '7d' : '1h';
+      const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn });
 
-        res.cookie('token', token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            maxAge: rememberMe ? 7 * 24 * 60 * 60 * 1000 : 60 * 60 * 1000,
-        });
+      res.cookie('token', token, {
+          httpOnly: true,
+          secure: process.env.NODE_ENV === 'production',
+          maxAge: rememberMe ? 7 * 24 * 60 * 60 * 1000 : 60 * 60 * 1000,
+      });
 
-        res.json({ message: 'Login successful' });
-    } catch (error) {
-        if (error.name === 'ValidationError') {
-            res.status(400).json({ message: 'Validation error.', details: error.message });
-        } else if (error.name === 'MongoError') {
-            res.status(500).json({ message: 'Database error.', details: error.message });
-        } else {
-            res.status(500).json({ message: 'Server error during login.', details: error.message });
-        }
-    }
+      return res.json({ message: 'Login successful', token });
+  } catch (error) {
+      console.error(`Login error: ${error.message}`);
+      if (error.name === 'ValidationError') {
+          res.status(400).json({ message: 'Validation error.', details: error.message });
+      } else if (error.name === 'MongoError') {
+          res.status(500).json({ message: 'Database error.', details: error.message });
+      } else {
+          res.status(500).json({ message: 'Server error during login.', details: error.message });
+      }
+  }
 };
+
 
 exports.forgotPassword = async (req, res) => {
     const { email } = req.body;
@@ -82,15 +86,16 @@ exports.forgotPassword = async (req, res) => {
 
         res.json({ message: 'Verification code sent to your email' });
     } catch (error) {
-        if (error.name === 'ValidationError') {
-            res.status(400).json({ message: 'Validation error.', details: error.message });
-        } else if (error.name === 'MongoError') {
-            res.status(500).json({ message: 'Database error.', details: error.message });
-        } else {
-            res.status(500).json({ message: 'Server error during password reset request.', details: error.message });
-        }
+      logger.error(`Forgot password error: ${error.message}`);
+      if (error.name === 'ValidationError') {
+        res.status(400).json({ message: 'Validation error.', details: error.message });
+      } else if (error.name === 'MongoError') {
+        res.status(500).json({ message: 'Database error.', details: error.message });
+      } else {
+        res.status(500).json({ message: 'Server error during password reset request.', details: error.message });
+      }
     }
-};
+  };
 
 exports.resetPassword = async (req, res) => {
     const { email, verificationCode, newPassword } = req.body;
@@ -107,12 +112,13 @@ exports.resetPassword = async (req, res) => {
 
         res.json({ message: 'Password reset successful' });
     } catch (error) {
-        if (error.name === 'ValidationError') {
-            res.status(400).json({ message: 'Validation error.', details: error.message });
-        } else if (error.name === 'MongoError') {
-            res.status(500).json({ message: 'Database error.', details: error.message });
-        } else {
-            res.status(500).json({ message: 'Server error during password reset.', details: error.message });
-        }
+      logger.error(`Reset password error: ${error.message}`);
+      if (error.name === 'ValidationError') {
+        res.status(400).json({ message: 'Validation error.', details: error.message });
+      } else if (error.name === 'MongoError') {
+        res.status(500).json({ message: 'Database error.', details: error.message });
+      } else {
+        res.status(500).json({ message: 'Server error during password reset.', details: error.message });
+      }
     }
-};
+  };

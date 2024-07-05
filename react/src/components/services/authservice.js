@@ -42,17 +42,20 @@ const resetPassword = async (email, code, newPassword) => {
 const login = async ({ credential, password, rememberMe }) => {
   try {
     const response = await axios.post(`${API_URL}/login`, { credential, password, rememberMe });
+    const token = response.data.token;
     if (rememberMe) {
-      localStorage.setItem('token', response.data.token);
+      localStorage.setItem('token', token);
     } else {
-      sessionStorage.setItem('token', response.data.token);
+      sessionStorage.setItem('token', token);
     }
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     return response.data;
   } catch (error) {
-    console.error('Error in login:', error.response.data);
+    console.error('Error in login:', error.response?.data || error.message);
     throw error;
   }
 };
+
 
 const logout = () => {
   localStorage.removeItem('token');

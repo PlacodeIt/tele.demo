@@ -1,29 +1,32 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useMutation } from 'react-query';
 import './AuthPage.css';
 import { TextField, Checkbox, FormControlLabel, Typography, Container, CssBaseline, Link, Grid } from '@mui/material';
 import { TDButton } from '../design/TDButton.tsx';
 import AuthService from '../services/AuthService';
 
+
 const AuthPage = () => {
   const [credential, setCredential] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleLogIn = async () => {
-    console.log('Login attempt with credential:', credential);
-    try {
-      setIsLoading(true);
-      await AuthService.login({ credential, password, rememberMe });
-      navigate('/main');
-    } catch (error) {
-      alert(error.response ? error.response.data.message : 'Login failed');
-    } finally {
-      setIsLoading(false);
+  const loginMutation= useMutation(AuthService.login,{
+    onSuccess: () => {
+      navigate('/main')
+    },
+    onError:(error)=>{
+      alert(error.response ? error.response.data.message: 'Login failed')
     }
+  });
+
+  const handleLogIn = async () => {
+    loginMutation.mutate({ credential, password, rememberMe });
   };
+
+  const {isLoading} = loginMutation;
 
   return (
     <Container component="main" maxWidth="xs">
