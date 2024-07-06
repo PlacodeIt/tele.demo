@@ -12,12 +12,12 @@ const analysisRoutes = require('./routes/analysisRoutes');
 const channelsRoutes = require('./routes/channelsRoutes');
 const logMiddleware = require('./middleware/logMiddleware');
 const errorMiddleware = require('./middleware/errorMiddleware');
-const userRoutes = require('./routes/userRoutes');
+const user = require('./routes/userRoutes');
  
 
 dotenv.config();
-
 const app = express();
+
 
 app.use(bodyParser.json());
 app.use(cors());
