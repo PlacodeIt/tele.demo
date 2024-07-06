@@ -16,6 +16,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import DownloadIcon from "@mui/icons-material/Download";
 import "./SideBar.css";
 import { useGreeting } from "./CurrentTime.tsx";
+import axios from "axios";
 
 const pages = [
   {
@@ -62,24 +63,17 @@ export const SideBar: React.FC = () => {
   useEffect(() => {
     const fetchUsername = async () => {
       try {
-        const response = await fetch("/api/users/username", {
-          headers: {
-            Authorization: `bearer ${document.cookie.split("=")[1]}`,
-          },
+        const response = await axios.get("/api/users/me", {
+          withCredentials: true,
         });
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const data = await response.json();
-        setUsername(data.username);
+        setUsername(response.data.username);
       } catch (error) {
-        console.error("error fetching username:", error);
+        console.error("Error fetching username:", error);
+        setUsername("Guest");
       }
     };
 
-    fetchUsername(); 
+    fetchUsername();
   }, []);
 
   return (

@@ -12,7 +12,8 @@ const analysisRoutes = require('./routes/analysisRoutes');
 const channelsRoutes = require('./routes/channelsRoutes');
 const logMiddleware = require('./middleware/logMiddleware');
 const errorMiddleware = require('./middleware/errorMiddleware');
-const userRoutes = require('./routes/userRoutes'); 
+const userRoutes = require('./routes/userRoutes');
+ 
 
 dotenv.config();
 
@@ -21,24 +22,15 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 app.use(cookieParser());
-
-
 app.use(morgan('combined'));
-
-
-
-
 app.use(logMiddleware);
-
 
 app.use('/api/auth', authRoutes);
 app.use('/api/analysis', analysisRoutes);
 app.use('/api/channels', channelsRoutes);
 app.use('/api/users', userRoutes);
 
-
 app.use(errorMiddleware);
-
 
 const connectWithRetry = () => {
     console.log('Attempting MongoDB connection...');
