@@ -2,7 +2,6 @@ const User = require('../models/User');
 
 exports.getUsername = async (req, res) => {
     const userId = req.user.userId;
-
     try {
         const user = await User.findById(userId).select('username');
         if (!user) {
