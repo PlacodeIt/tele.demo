@@ -7,12 +7,13 @@ const dotenv = require('dotenv');
 const morgan = require('morgan');
 const fs = require('fs');
 const path = require('path');
+
 const authRoutes = require('./routes/authRoutes');
 const analysisRoutes = require('./routes/analysisRoutes');
 const channelsRoutes = require('./routes/channelsRoutes');
 const logMiddleware = require('./middleware/logMiddleware');
 const errorMiddleware = require('./middleware/errorMiddleware');
-const user = require('./routes/userRoutes');
+const userRoutes = require('./routes/userRoutes');
  
 
 dotenv.config();
