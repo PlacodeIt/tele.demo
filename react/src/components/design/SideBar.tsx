@@ -66,6 +66,7 @@ export const SideBar: React.FC = () => {
         const response = await axios.get("/api/users/me", {
           withCredentials: true,
         });
+        console.log("Fetched user data:", response.data);
         setUsername(response.data.username);
       } catch (error) {
         console.error("Error fetching username:", error);
