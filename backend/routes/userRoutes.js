@@ -1,13 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const authMiddleware = require('../middleware/authMiddleware');
-const userController = require('../controllers/userController');
-const user = require('..\models\User.js')
+const User = require('../models/User'); 
 
-router.get("/", (req, res)=>{
-  user.find()
-  .sort({data: -1})
-  .then((user) => res.json(user))
-  .catch((err) => res.status(404).json({notfound: " not found users"}))
+router.get('/me', async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id); 
+    res.json({ username: user.username });
+  } catch (err) {
+    res.status(500).json({ error: 'Server error' });
+  }
 });
+
 module.exports = router;
