@@ -1,7 +1,6 @@
 import React from 'react';
 import { Container, CssBaseline, Typography } from '@mui/material';
 import { NavBar } from '../design/NavBar.tsx'
-import { TableChannels} from '../design/TableChannels.tsx'
 import './MainScreen.css';
 import SideBar from '../design/SideBar.tsx';
 
@@ -18,7 +17,7 @@ const MainScreen = () => {
           </Typography>
           <div>
           <></>
-          <TableChannels />
+          
         </div>
         </div>
       </Container>

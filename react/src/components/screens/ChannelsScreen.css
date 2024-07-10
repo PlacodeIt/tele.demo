@@ -3,7 +3,7 @@
     color: black;
     flex-direction: column; 
     justify-content: center; 
-    position: absolute; 
+    position: relative; 
     padding: 20px ;
     top: 15%; 
     left: 17%; 
@@ -14,3 +14,13 @@
     min-height: 100vh; 
     overflow-anchor: auto;
 }
+
+.Channel-screen-table {
+    padding: 15px;
+    width: 100%;
+    position: absolute;
+    top: 50%;
+    left:-17%;
+    width: 100%;
+  }
+  
