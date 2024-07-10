@@ -76,33 +76,3 @@
     font-weight: 600;
   }
 
-  /* 
-  
-margin: 10px;  All sides 
-margin-top: 10px; Top side 
-margin-right: 10px; Right side 
-margin-bottom: 10px;  Bottom side 
-margin-left: 10px; Left side 
-
-padding: 10px;  All sides 
-padding-top: 10px;  Top side 
-padding-right: 10px;  Right side 
-padding-bottom: 10px;  Bottom side 
-padding-left: 10px;
-
-position: static | relative | absolute | fixed | sticky;
-
-top: 10px;
-right: 10px;
-bottom: 10px;
-left: 10px;
-
-display: block | inline | inline-block | flex | grid | none;
-flex: 1; Flex-grow 1, flex-shrink 1, flex-basis auto 
-
-align-items: center;
-justify-content: center;
-width: 100px;
-height: 100px;
-
-  */

@@ -17,9 +17,10 @@
 
 .Channel-screen-table {
     padding: 15px;
+    table-layout: auto;
     width: 100%;
     position: absolute;
-    top: 50%;
+    top: 25%;
     left:-17%;
     width: 100%;
   }
