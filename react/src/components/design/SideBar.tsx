@@ -16,7 +16,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import DownloadIcon from "@mui/icons-material/Download";
 import "./SideBar.css";
 import { useGreeting } from "./CurrentTime.tsx";
-import axios from "axios";
+import axios from "../../setupAxios"; 
 
 const pages = [
   {
@@ -63,11 +63,9 @@ export const SideBar: React.FC = () => {
   useEffect(() => {
     const fetchUsername = async () => {
       try {
-        const response = await axios.get("/api/users/me", {
-          withCredentials: true,
-        });
+        const response = await axios.get("/api/users/me");
         console.log("Fetched user data:", response.data);
-        setUsername(response.data.username);
+        setUsername(response.data.username || "Guest");
       } catch (error) {
         console.error("Error fetching username:", error);
         setUsername("Guest");
@@ -82,7 +80,7 @@ export const SideBar: React.FC = () => {
       <Box className="sidebar-box">
         <div className="sidebar-greeting">
           Welcome {username}!<br /> {greeting}.<br />
-          how can we help you today?
+          How can we help you today?
         </div>
         <List>
           {pages.map((page) => (

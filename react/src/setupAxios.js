@@ -1,8 +1,7 @@
 import axios from 'axios';
 
 axios.defaults.baseURL = process.env.REACT_APP_API_URL || 'http://localhost:3001';
-
-axios.defaults.withCredentials = true;
+axios.defaults.withCredentials = true;  // Ensure this is set
 
 axios.interceptors.request.use(
   config => {
