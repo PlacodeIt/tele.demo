@@ -3,6 +3,8 @@ import { Container, CssBaseline, Typography } from '@mui/material';
 import { NavBar } from '../design/NavBar.tsx';
 import SideBar from '../design/SideBar.tsx';
 import './ChannelsScreen.css';
+import { TableChannels} from '../design/TableChannels.tsx'
+
 
 const ChannelsScreen = () => {
     return (
@@ -13,10 +15,11 @@ const ChannelsScreen = () => {
                 <CssBaseline />
                 <div className="channels-container">
                     <Typography component="h1" variant="h5">
-                        Channels page
+                         
                     </Typography>
-                    <div>
+                    <div className="Channel-screen-table" maxWidth="md">
                         <></>
+                        <TableChannels />
                     </div>
                 </div>
             </Container>

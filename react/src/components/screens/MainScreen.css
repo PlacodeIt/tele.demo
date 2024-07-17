@@ -1,21 +1,13 @@
 .main-container {
+  font-family: 'Courier Prime', monospace;
     background-color: #7493A2;
     color: black;
-    flex-direction: column; 
+    width: 85%;
+    left: 10%; 
     justify-content: center; 
     position: absolute; 
-    padding: 20px ;
-    top: 15%; 
-    left: 17%; 
-    border-radius: 8%;
     display: flex;
-    justify-items: center; 
     align-items: center; 
-    min-height: 100vh; 
-    overflow-anchor: auto;
+    min-height: 50vh; 
+    font-family: 'Courier Prime', monospace;
   }
-  
-  .table-container {
-    margin-top: 20px; 
-  }
-  

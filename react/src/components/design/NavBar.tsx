@@ -20,12 +20,8 @@ const pages = ["Home", "Chat", "Friends"];
 const settings = ["Profile", "Account", "Logout"];
 
 export const NavBar: React.FC = () => {
-  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
-    null
-  );
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
-    null
-  );
+  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
+  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
   const [logoutOpen, setLogoutOpen] = React.useState(false);
 
   const currentTime = useCurrentTime();
@@ -137,7 +133,7 @@ export const NavBar: React.FC = () => {
         </Container>
       </AppBar>
       <Logout open={logoutOpen} handleClose={handleLogoutClose} />{" "}
-      {/* Add the Logout dialog */}
+      {"Bye"}
     </>
   );
 };

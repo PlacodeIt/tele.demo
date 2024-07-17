@@ -1,15 +1,18 @@
 const User = require('../models/User');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt');  // Ensure this line is included
 
 exports.getUserDetails = async (req, res) => {
     const userId = req.user.userId;
     try {
         const user = await User.findById(userId).select('email username');
         if (!user) {
+            console.log('User not found for ID:', userId);
             return res.status(400).json({ message: 'User not found' });
         }
+        console.log('Fetched user details:', user);
         res.json({ email: user.email, username: user.username });
     } catch (err) {
+        console.log('Server error:', err.message);
         res.status(500).json({ message: 'Server error', error: err.message });
     }
 };

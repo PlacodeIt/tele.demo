@@ -14,3 +14,12 @@
     min-height: 100vh; 
     overflow-anchor: auto;
 }
+
+.favorite-channel-table{
+    padding: 15px;
+    width: 100%;
+    position: absolute;
+    top: 70%;
+    left:-17%;
+    width: 100%;
+}
