@@ -8,6 +8,6 @@
     position: absolute; 
     display: flex;
     align-items: center; 
-    min-height: 50vh; 
+    min-height: 80vh; 
     font-family: 'Courier Prime', monospace;
   }

@@ -16,7 +16,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import DownloadIcon from "@mui/icons-material/Download";
 import "./SideBar.css";
 import { useGreeting } from "./CurrentTime.tsx";
-import axios from "../../setupAxios"; 
+import axios from "../../setupAxios";
 
 const pages = [
   {
@@ -68,7 +68,7 @@ export const SideBar: React.FC = () => {
         setUsername(response.data.username || "Guest");
       } catch (error) {
         console.error("Error fetching username:", error);
-        setUsername("Guest");
+        setUsername("guest");
       }
     };
 

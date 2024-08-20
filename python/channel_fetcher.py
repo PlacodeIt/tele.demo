@@ -1,6 +1,6 @@
-from db import add_chat
+from db_handler import add_chat, is_exist_db
 import configparser
-from telethon import TelegramClient, functions, errors
+from telethon import TelegramClient, functions, errors, connection
 from telethon.tl.functions.channels import GetFullChannelRequest
 from collections import defaultdict
 import logging
@@ -8,9 +8,6 @@ import asyncio
 from functools import wraps
 import signal
 import time
-import os
-import json
-import pandas as pd
 
 # Load the configuration
 config = configparser.ConfigParser()
@@ -20,8 +17,8 @@ api_id = config['telegram']['api_id']
 api_hash = config['telegram']['api_hash']
 query = config['telegram']['query']
 
-# Create the Telegram client with the session name 'tele.demo'
-client = TelegramClient('tele.demo', api_id, api_hash)
+# Create the Telegram client with the session name 'tele.demo' and disable SSL
+client = TelegramClient('tele.demo', api_id, api_hash, connection=connection.ConnectionTcpMTProxyAbridged)
 
 # Setup logging to omit the date
 logging.basicConfig(
@@ -59,46 +56,7 @@ for handler in logger.handlers:
 # Dictionary to keep track of seen chat IDs
 seen_chats = defaultdict(bool)
 
-# Create the downloads folder if it doesn't exist
-downloads_folder = os.path.join(os.getcwd(), 'downloads')
-if not os.path.exists(downloads_folder):
-    os.makedirs(downloads_folder)
-
-# Path to the data file
-json_file_path = os.path.join(downloads_folder, f'{query}.json')
-excel_file_path = os.path.join(downloads_folder, f'{query}.xlsx')
-
-# Function to load existing data from the JSON file
-def load_existing_data():
-    if os.path.exists(json_file_path):
-        with open(json_file_path, 'r') as file:
-            return json.load(file)
-    return []
-
-# Function to save data to the JSON file
-def save_data_to_json(data):
-    with open(json_file_path, 'w') as file:
-        json.dump(data, file, indent=4)
-
-# Function to save data to an Excel file
-def save_data_to_excel(data):
-    df = pd.DataFrame(data)
-    df.to_excel(excel_file_path, index=False)
-
-# Load existing data
-existing_data = load_existing_data()
-
-# Update the seen_chats dictionary with the existing data
-for chat in existing_data:
-    seen_chats[chat['chat_id']] = True
-
-# Check if chat exists in MongoDB
-def is_exist_db(chat_id, collection_name):
-    from pymongo import MongoClient
-    client = MongoClient("mongodb://localhost:27017/")
-    db = client["telegram_messages"]
-    collection = db[collection_name]
-    return collection.find_one({"chat_id": chat_id}) is not None
+existing_data = []
 
 def is_exist(chat_id):
     return seen_chats[chat_id] or is_exist_db(chat_id, query)
@@ -136,7 +94,7 @@ async def fetch_channels_with_query(query, limit):
     try:
         result = await client(functions.contacts.SearchRequest(
             q=query,
-            limit=limit  # Use the user-defined limit
+            limit=limit  # user type limit
         ))
         logger.info(f"\nSearch request completed. Number of chats found: {len(result.chats)}")
 
@@ -196,8 +154,6 @@ async def fetch_channels_with_query(query, limit):
         logger.info(f"Total time taken: {elapsed_time:.2f} seconds")
         logger.info(f"Total chats downloaded: {downloaded_count}")
         logger.info(f"Total chats skipped: {skipped_count}")
-        save_data_to_json(existing_data)  # Save data to JSON file
-        save_data_to_excel(existing_data)  # Save data to Excel file
         await client.disconnect()
 
 async def shutdown_signal_handler():

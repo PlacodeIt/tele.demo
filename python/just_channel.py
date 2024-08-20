@@ -4,9 +4,8 @@ import os
 from telethon import TelegramClient
 from telethon.tl.functions.channels import GetFullChannelRequest
 from telethon.tl.types import MessageEntityUrl, MessageEntityTextUrl, MessageMediaPhoto, MessageMediaDocument
-from pymongo import MongoClient
+from db_handler import add_chat, add_message, is_message_exist, add_channel_info, add_sender_info
 from datetime import datetime, timedelta
-
 
 config = configparser.ConfigParser()
 config.read('config.ini')
@@ -16,9 +15,7 @@ api_hash = config['telegram']['api_hash']
 channel_name = "nytimes"
 media_download_path = './downloaded_media/'  
 
-
 os.makedirs(media_download_path, exist_ok=True)
-
 
 client = TelegramClient('tele.demo', api_id, api_hash)
 
@@ -28,7 +25,6 @@ async def fetch_channel_details(channel_name):
         entity = await client.get_entity(channel_name)
         full_channel = await client(GetFullChannelRequest(channel=entity))
 
-        
         channel_info = {
             'id': full_channel.full_chat.id,
             'title': entity.title,
@@ -44,26 +40,11 @@ async def fetch_channel_details(channel_name):
         }
 
         print("Channel details fetched successfully.")
+        add_channel_info(channel_info['id'], channel_info)
 
-        
-        mongo_client = MongoClient('mongodb://localhost:27017/')
-        db = mongo_client.telegram_messages
-
-        
-        db.channels.update_one(
-            {'id': channel_info['id']},
-            {'$set': channel_info},
-            upsert=True
-        )
-
-        print("Channel details inserted/updated in MongoDB.")
-
-        
         date_one_week_ago = datetime.now() - timedelta(weeks=1)
 
-        
         async for message in client.iter_messages(entity, offset_date=date_one_week_ago):
-            
             has_media = message.media is not None
             media_type = None
             media_path = None
@@ -73,14 +54,12 @@ async def fetch_channel_details(channel_name):
                     media_type = 'photo'
                     media_path = await client.download_media(message.media, file=media_download_path)
                 elif isinstance(message.media, MessageMediaDocument):
-                    
                     if any(attr.mime_type.startswith('video/') for attr in message.media.document.attributes if hasattr(attr, 'mime_type')):
                         media_type = 'video'
                     else:
                         media_type = 'document'
                     media_path = await client.download_media(message.media, file=media_download_path)
 
-           
             has_links = any(isinstance(entity, (MessageEntityUrl, MessageEntityTextUrl)) for entity in message.entities or [])
 
             message_info = {
@@ -94,15 +73,9 @@ async def fetch_channel_details(channel_name):
                 'has_links': has_links
             }
 
-            
-            if db.messages.find_one({'message_id': message.id}):
-                print(f"Duplicate message found with ID: {message.id}, skipping.")
-            else:
-                db.messages.update_one(
-                    {'message_id': message.id},
-                    {'$set': message_info},
-                    upsert=True
-                )
+            if not is_message_exist(message.id):
+                add_message(message_info['message_text'], message_info['message_id'], message_info['chat_title'], message_info['chat_id'], message_info['chat_username'], message_info['media_type'], message_info['date'])
+                add_sender_info(message_info['sender_id'])
                 print(f"Inserted/updated message with ID: {message.id}.")
 
         await client.disconnect()

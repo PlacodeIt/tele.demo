@@ -4,10 +4,9 @@ import os
 import sys
 from telethon.sync import TelegramClient
 from telethon.errors.rpcerrorlist import ChannelInvalidError
-from telethon import TelegramClient
 from telethon.tl.functions.channels import GetFullChannelRequest
 from telethon.tl.types import MessageEntityUrl, MessageEntityTextUrl, MessageMediaPhoto, MessageMediaDocument
-from pymongo import MongoClient
+from db_handler import add_chat, add_message, is_message_exist, add_channel_info, add_sender_info
 from datetime import datetime, timedelta
 
 # Read configuration from config.ini
@@ -45,17 +44,7 @@ async def fetch_channel_details(channel_name):
         }
 
         print("Channel details fetched successfully.")
-
-        mongo_client = MongoClient('mongodb://localhost:27017/')
-        db = mongo_client.telegram_messages
-
-        db.channels.update_one(
-            {'id': channel_info['id']},
-            {'$set': channel_info},
-            upsert=True
-        )
-
-        print("Channel details inserted/updated in MongoDB.")
+        add_channel_info(channel_info['id'], channel_info)
 
         date_one_week_ago = datetime.now() - timedelta(weeks=1)
 
@@ -88,14 +77,9 @@ async def fetch_channel_details(channel_name):
                 'has_links': has_links
             }
 
-            if db.messages.find_one({'message_id': message.id}):
-                print(f"Duplicate message found with ID: {message.id}, skipping.")
-            else:
-                db.messages.update_one(
-                    {'message_id': message.id},
-                    {'$set': message_info},
-                    upsert=True
-                )
+            if not is_message_exist(message.id):
+                add_message(message_info['message_text'], message_info['message_id'], message_info['chat_title'], message_info['chat_id'], message_info['chat_username'], message_info['media_type'], message_info['date'])
+                add_sender_info(message_info['sender_id'])
                 print(f"Inserted/updated message with ID: {message.id}.")
 
         await client.disconnect()
