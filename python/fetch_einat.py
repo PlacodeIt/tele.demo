@@ -24,19 +24,23 @@ api_hash = config['telegram']['api_hash']
 query = config['telegram']['query']
 phone_number = config['telegram']['phone']
 
+# Search parameters
+channel_search_term = 'fuck jews'  # Channel search term, easily changeable
+message_search_term = 'and'  # Message search term, easily changeable
+
 # MongoDB connection
 mongo_client = MongoClient('mongodb://localhost:27017/')
 db = mongo_client['telegram_data']
-collection = db['messages']
+collection = db['test_1']
 
 # Function to search for channels and retrieve messages
 def fetch_and_store_messages():
     with TelegramClient(phone_number, api_id, api_hash) as client:
         print("Connected to Telegram.")
         
-        # Search for channels with "Gaza" in their name
-        print("Searching for channels containing 'Gaza' in their name...")
-        result = client(SearchRequest(q='Gaza', limit=100))
+        # Search for channels with the specified term in their name
+        print(f"Searching for channels containing '{channel_search_term}' in their name...")
+        result = client(SearchRequest(q=channel_search_term, limit=100))
         channels = [chat for chat in result.chats if chat.megagroup]
         
         print(f"Found {len(channels)} channels. Processing messages...")
@@ -44,9 +48,9 @@ def fetch_and_store_messages():
         for channel in channels:
             print(f"Fetching messages from channel: {channel.title} (ID: {channel.id})")
             
-            # Retrieve messages containing "Zionist"
-            messages = client.get_messages(channel, search='Zionist', limit=100)
-            print(f"Retrieved {len(messages)} messages containing 'Zionist'. Filtering non-English messages...")
+            # Retrieve messages containing the specified search term
+            messages = client.get_messages(channel, search=message_search_term, limit=100)
+            print(f"Retrieved {len(messages)} messages containing '{message_search_term}'. Filtering non-English messages...")
             
             for message in messages:
                 try:
