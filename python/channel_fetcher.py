@@ -126,13 +126,21 @@ def retry_on_error(retries=3, delay=5):
 @retry_on_error()
 async def fetch_channels_with_query(query, limit):
     """Fetch channels and groups that match the query and get detailed information."""
-
+    
     logger.info(f"\nStarting to fetch channels and groups with query: {query}")
+
+    # Ensure the client is connected
+    if not client.is_connected():
+        await client.connect()
+    
+    if not await client.is_user_authorized():
+        logger.error("Client is not authorized. Please log in.")
+        return
 
     start_time = time.time()
     downloaded_count = 0
     skipped_count = 0
-    
+
     try:
         result = await client(functions.contacts.SearchRequest(
             q=query,

@@ -7,10 +7,10 @@ import time # for testing
 
 # Step 1: Connect to MongoDB and load the data
 client = MongoClient('mongodb://localhost:27017/')
-db = client.telegram_messages
+db = client.telegram_data
 
 # Load training data
-train_data_cursor = db.all_train_data.find()
+train_data_cursor = db.train_data_0_1.find()
 train_data = pd.DataFrame(list(train_data_cursor))
 
 # Check training data
@@ -18,7 +18,7 @@ print("Train Data Columns:", train_data.columns)
 print("First few rows of Train Data:\n", train_data.head())
 
 # Load test data
-test_data_cursor = db.messages.find() #need to rename to test_data
+test_data_cursor = db.test_data_0_1.find() #need to rename to test_data
 test_data = pd.DataFrame(list(test_data_cursor))
 
 # Check test data
