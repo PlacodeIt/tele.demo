@@ -1,4 +1,5 @@
 from telethon.sync import TelegramClient
+import configparser
 from telethon.tl.functions.contacts import SearchRequest
 from pymongo import MongoClient
 from langdetect import detect, LangDetectException
@@ -14,9 +15,14 @@ Run the script to connect to Telegram, search for channels, retrieve messages, a
 This script will store the channel's name, channel ID, message ID, message text, and the date the message was sent in MongoDB.
 '''
 # Telegram API credentials
-api_id = '22039931'
-api_hash = '1f2abdd750bb1616eee83723d55738e8'
-phone_number = '+972509953547'
+# Load the configuration
+config = configparser.ConfigParser()
+config.read('config.ini')
+
+api_id = config['telegram']['api_id']
+api_hash = config['telegram']['api_hash']
+query = config['telegram']['query']
+phone_number = config['telegram']['phone']
 
 # MongoDB connection
 mongo_client = MongoClient('mongodb://localhost:27017/')
