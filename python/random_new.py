@@ -18,7 +18,7 @@ print("Train Data Columns:", train_data.columns)
 print("First few rows of Train Data:\n", train_data.head())
 
 # Load test data
-test_data_cursor = db.test_data_0_1.find() #need to rename to test_data
+test_data_cursor = db.test_data_2.find() #need to rename to test_data
 test_data = pd.DataFrame(list(test_data_cursor))
 
 # Check test data
